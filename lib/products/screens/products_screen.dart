@@ -40,9 +40,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {
-              // Implement search functionality
-            },
+            onPressed: () {},
           ),
         ],
       ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ProductInfo extends StatelessWidget {
   final ProductModel product;
 
-  const ProductInfo({Key? key, required this.product}) : super(key: key);
+  const ProductInfo({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {

@@ -5,10 +5,10 @@ class CategoryButtons extends StatelessWidget {
   final Function(String) onCategorySelected;
 
   const CategoryButtons({
-    Key? key,
+    super.key,
     required this.selectedCategory,
     required this.onCategorySelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
