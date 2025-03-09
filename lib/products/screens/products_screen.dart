@@ -83,6 +83,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
   // Category Button
+  // Widget _categoryButton(String category) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 5),
+  //     child: ChoiceChip(
+  //       label: Text(category),
+  //       selected: selectedCategory == category,
+  //       onSelected: (selected) {
+  //         setState(() {
+  //           selectedCategory = category;
+  //         });
+  //       },
+  //     ),
+  //   );
+  // }
   Widget _categoryButton(String category) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -92,6 +106,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
         onSelected: (selected) {
           setState(() {
             selectedCategory = category;
+          });
+
+          final productProvider =
+              Provider.of<ProductProvider>(context, listen: false);
+          productProvider
+              .setLoading(true); // Show shimmer effect while filtering
+
+          Future.delayed(Duration(milliseconds: 500), () {
+            // Small delay to simulate loading effect
+            productProvider.setLoading(false);
           });
         },
       ),
