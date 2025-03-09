@@ -3,6 +3,7 @@ import 'package:app_dev_assign2/products/providers/products_provider.dart';
 import 'package:app_dev_assign2/products/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -12,7 +13,7 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  String selectedCategory = "All"; // Default category
+  String selectedCategory = "All";
 
   @override
   void initState() {
@@ -27,7 +28,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
     final productProvider = Provider.of<ProductProvider>(context);
     final allProducts = productProvider.products;
 
-    // Filter products by category
     List<ProductModel> filteredProducts = selectedCategory == "All"
         ? allProducts
         : allProducts.where((p) => p.category == selectedCategory).toList();
@@ -61,7 +61,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
           Expanded(
             child: productProvider.isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? _buildShimmerGrid() // Use shimmer effect while loading
                 : GridView.builder(
                     padding: EdgeInsets.all(10),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -82,7 +82,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  // Widget for category button
+  // Category Button
   Widget _categoryButton(String category) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -98,7 +98,33 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  // Widget for each product card
+  // Shimmer Loading Effect (Grid Style)
+  Widget _buildShimmerGrid() {
+    return GridView.builder(
+      padding: EdgeInsets.all(10),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.7,
+      ),
+      itemCount: 6, // Show shimmer placeholders
+      itemBuilder: (context, index) {
+        return Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // Product Card
   Widget _productCard(BuildContext context, ProductModel product) {
     return GestureDetector(
       onTap: () {
@@ -155,7 +181,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  // Widget for displaying star rating
+  // Star Rating
   Widget _buildRatingStars(double rating) {
     int fullStars = rating.floor();
     bool halfStar = rating - fullStars >= 0.5;
