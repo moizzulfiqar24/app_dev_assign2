@@ -149,13 +149,68 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
   // Product Card
+  // Widget _productCard(BuildContext context, ProductModel product) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) => ProductDetailScreen(product: product)),
+  //       );
+  //     },
+  //     child: Card(
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Expanded(
+  //             child: ClipRRect(
+  //               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+  //               child: Image.network(product.image,
+  //                   width: double.infinity, fit: BoxFit.cover),
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Text(
+  //               product.title,
+  //               maxLines: 2,
+  //               overflow: TextOverflow.ellipsis,
+  //               style: TextStyle(fontWeight: FontWeight.bold),
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.symmetric(horizontal: 8),
+  //             child: Text(
+  //               "\$${product.price}",
+  //               style: TextStyle(
+  //                   color: Colors.green,
+  //                   fontSize: 16,
+  //                   fontWeight: FontWeight.bold),
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Row(
+  //               children: [
+  //                 _buildRatingStars(product.rating),
+  //                 SizedBox(width: 5),
+  //                 Text("(${product.ratingCount})"),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
   Widget _productCard(BuildContext context, ProductModel product) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => ProductDetailScreen(product: product)),
+          _createPageRoute(ProductDetailScreen(product: product)),
         );
       },
       child: Card(
@@ -202,6 +257,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  // Custom Page Route for Bottom-to-Top Transition
+  Route _createPageRoute(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: Duration(milliseconds: 100),
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0); // Start from bottom
+        const end = Offset.zero; // End at normal position
+        const curve = Curves.easeInOut;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(position: offsetAnimation, child: child);
+      },
     );
   }
 
