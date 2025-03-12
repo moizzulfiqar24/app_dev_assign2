@@ -22,7 +22,10 @@ class ProductInfo extends StatelessWidget {
           Text(
             "\$${product.price}",
             style: const TextStyle(
-                fontSize: 22, color: Colors.green, fontWeight: FontWeight.bold),
+              fontSize: 22,
+              color: Colors.green,
+              // fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 5),
           Row(

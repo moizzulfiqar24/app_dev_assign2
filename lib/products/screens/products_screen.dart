@@ -46,7 +46,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
       ),
       body: Column(
         children: [
-          // Category Filter Buttons
           CategoryButtons(
             selectedCategory: selectedCategory,
             onCategorySelected: (category) {

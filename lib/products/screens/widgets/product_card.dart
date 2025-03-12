@@ -18,6 +18,7 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Card(
+        elevation: 7,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,23 +42,23 @@ class ProductCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                "\$${product.price}",
-                style: const TextStyle(
-                    color: Colors.green,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text(
+                    "\$${product.price}",
+                    style: const TextStyle(
+                      color: Colors.green,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   RatingStars(rating: product.rating),
-                  const SizedBox(width: 5),
-                  Text("(${product.ratingCount})"),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
           ],
         ),
