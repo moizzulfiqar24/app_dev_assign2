@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
       create: (context) => ProductProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // theme: ThemeData.dark(useMaterial3: true),
         home: ProductsScreen(),
       ),
     );
